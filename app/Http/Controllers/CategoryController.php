@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use App\Item;
 use Session;
 
 class CategoryController extends Controller
@@ -16,7 +17,8 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::orderBy('name','ASC')->paginate(10);
-        return view('categories.index')->with('categories',$categories);
+        $items = Item::all();
+        return view('categories.index')->with('categories',$categories)->with('items',$items);
     }
 
     /**
@@ -109,6 +111,16 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $items = Item::all();
+
+        $category = Category::find($id);
+        if (!$items->contains('category_id',$id)) {
+            $category->delete();
+            Session::flash('success','The category has been deleted');
+        } else {
+            Session::flash('error','Unable to delete the category');
+        }
+
+        return redirect()->route('categories.index');
     }
 }
