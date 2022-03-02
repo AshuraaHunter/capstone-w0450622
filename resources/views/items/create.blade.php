@@ -10,6 +10,15 @@ Laravel Project
 
 @section('scripts')
 {!! Html::script('/bower_components/parsleyjs/dist/parsley.min.js') !!}
+{!! Html::script('https://cdn.tiny.cloud/1/tg6yi464ynwd3ugih0n92s2wj7bm28auxnby0r9fvs1p8pgj/tinymce/5/tinymce.min.js') !!}
+<script type="text/javascript">
+	tinymce.init({
+	  selector: 'textarea.tinymce-editor', // Replace this CSS selector to match the placeholder element for TinyMCE
+	  plugins: 'code table lists',
+	  toolbar: 'undo redo | formatselect| bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table',
+	  content_css: '//www.tiny.cloud/css/codepen.min.css'
+	});
+</script>
 @endsection
 
 @section('css')
@@ -40,7 +49,7 @@ Laravel Project
 				</select>
 
 			    {{ Form::label('description', 'Description:', ['style'=>'margin-top:20px']) }}
-			    {{ Form::textarea('description', null, ['class'=>'form-control', 
+			    {{ Form::textarea('description', null, ['class'=>'form-control tinymce-editor', 
 				                                 'data-parsley-required'=>'']) }}
 
 				{{ Form::label('price', 'Price:', ['style'=>'margin-top:20px']) }}
