@@ -13,8 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('items', '\App\Http\Controllers\ItemController');
-Route::resource('categories', '\App\Http\Controllers\CategoryController');
+# works as a way to lump multiple resource routes into authentication processes
+# otherwise we'd have to do all this manually
+Route::group(['middleware' => 'auth'], function() {
+    Route::resource('items', '\App\Http\Controllers\ItemController');
+    Route::resource('categories', '\App\Http\Controllers\CategoryController');
+
+    Route::get('/logout', '\App\Http\Controllers\LogoutController@perform')->name('logout.perform'); # testing logouts
+});
 
 Route::get('/', function () {
     return view('welcome');

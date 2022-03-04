@@ -11,6 +11,12 @@ use Session;
 
 class ItemController extends Controller
 {
+    # controller modified to redirect to predefined auth methods in case something goes wrong
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
