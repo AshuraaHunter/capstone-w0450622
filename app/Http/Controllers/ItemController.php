@@ -73,10 +73,16 @@ class ItemController extends Controller
 
             $filename = time() . '.' . $image->getClientOriginalExtension();
             $location ='images/items/' . $filename;
+            $tn_location = 'images/items/tn_' . $filename();
+            $lg_location = 'images/items/lrg_' . $filename();
 
             $image = Image::make($image);
             Storage::disk('public')->put($location, (string) $image->encode());
             $item->picture = $filename;
+            $image->resize(140,140);
+            Storage::disk('public')->put($tn_location, (string) $image->encode());
+            $image->resize(400,400);
+            Storage::disk('public')->put($lrg_location, (string) $image->encode());
         }
 
         $item->save(); //saves to DB
@@ -145,13 +151,25 @@ class ItemController extends Controller
 
             $filename = time() . '.' . $image->getClientOriginalExtension();
             $location ='images/items/' . $filename;
+            $tn_location = 'images/items/tn_' . $filename();
+            $lg_location = 'images/items/lrg_' . $filename();
 
             $image = Image::make($image);
             Storage::disk('public')->put($location, (string) $image->encode());
+            $item->picture = $filename;
+            $image->resize(140,140);
+            Storage::disk('public')->put($tn_location, (string) $image->encode());
+            $image->resize(400,400);
+            Storage::disk('public')->put($lrg_location, (string) $image->encode());
+
+            # $image = Image::make($image);
+            # Storage::disk('public')->put($location, (string) $image->encode());
 
             if (isset($item->picture)) {
                 $oldFilename = $item->picture;
-                Storage::delete('public/images/items/'.$oldFilename);                
+                Storage::delete('public/images/items/'.$oldFilename);  
+                Storage::delete('public/images/items/tn_'.$oldFilename);
+                Storage::delete('public/images/items/lrg_'.$oldFilename);
             }
 
             $item->picture = $filename;
@@ -177,7 +195,9 @@ class ItemController extends Controller
         $item = Item::find($id);
         if (isset($item->picture)) {
             $oldFilename = $item->picture;
-            Storage::delete('public/images/items/'.$oldFilename);                
+            Storage::delete('public/images/items/'.$oldFilename);
+            Storage::delete('public/images/items/tn_'.$oldFilename);
+            Storage::delete('public/images/items/lrg_'.$oldFilename);
         }
         $item->delete();
 
