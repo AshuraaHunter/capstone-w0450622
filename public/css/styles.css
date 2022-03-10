@@ -69,3 +69,12 @@ ul.navbar-nav li.active {
 		height: 45px;
 	}
 }
+
+.truncate {
+	height: 34px !important;
+	overflow: hidden;
+  
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}

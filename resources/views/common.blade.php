@@ -31,15 +31,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">@yield('pagename')</a>
+          <a class="navbar-brand" href="/" style="font-size: 2.5rem">@yield('pagename')</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li class="{{ (Request::is('/')) ? "active" : "" }}"><a href="/">Home</a></li>
-            <li class="{{ Request::is('categories/*') || Request::is('categories') ? "active" : "" }}"><a href="/categories">Categories</a></li>
-            <li class="{{ Request::is('items/*') || Request::is('items') ? "active" : "" }}"><a href="/items">Items</a></li>
+            <li class="{{ (Request::is('/')) ? "active" : "" }}"><a href="/" style="font-size: 1.6rem">Home</a></li>
+            <li class="{{ Request::is('categories/*') || Request::is('categories') ? "active" : "" }}"><a href="/categories" style="font-size: 1.6rem">Categories</a></li>
+            <li class="{{ Request::is('items/*') || Request::is('items') ? "active" : "" }}"><a href="/items" style="font-size: 1.6rem">Items</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
           </ul>
@@ -58,6 +58,26 @@
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!--
+    <script src="/js/clamp.min.js"></script>
+    <script>
+      $('.truncate').each(function(index,element) {
+        $clamp(element,{clamp:2,useNativeClamp:false});
+      });
+    </script>
+    -->
+    <!-- turns out this script is suboptimal
+    <script src="/js/dotdotdot.js"></script>
+    
+    <script type="text/javascript">
+      document.addEventListener("DOMContentLoaded",() => {
+          let wrapper = document.querySelector(".truncate");
+          let options = {};
+          new Dotdotdot( wrapper, options );
+      });
+    </script>
+    -->
 
     @yield('scripts')
   </body>
