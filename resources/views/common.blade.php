@@ -7,7 +7,9 @@
     <title>@yield('pagetitle')</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" type="text/css">
+    {!! Html::style('/css/app.css') !!}
+    {!! Html::style('/css/parsley.css') !!}
     {!! Html::style('/css/styles.css') !!}
     @yield('css')
 

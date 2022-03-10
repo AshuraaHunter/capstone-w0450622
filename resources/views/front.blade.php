@@ -9,50 +9,47 @@ Laravel Project
 @endsection
 
 @section('content')
-	<!--
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<h1>All Items</h1>
-		</div>
-		<div class="col-md-2">
-			<a href="{{ route('items.create') }}" class="btn btn-lg btn-block btn-primary btn-h1-spacing">Create New Item</a>
-		</div>
-		<div class="col-md-12">
-			<hr />
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<table class="table">
-				<thead>
-					<th>#</th>
-					<th>Title</th>
-					<th>Created At</th>
-					<th>Last Modified</th>
-					<th></th>
-				</thead>
-				<tbody>
-					@foreach ($items as $item)
-						<tr>
-							<th>{{ $item->id }}</th>
-							<td>{{ $item->title }}</td>
-							<td style="width: 100px;">{{ date('M j, Y', strtotime($item->created_at)) }}</td>
-							<td>{{ date('M j, Y', strtotime($item->updated_at)) }}</td>
-							<td style="width: 175px;"><div style='float:left; margin-right:5px;'><a href="{{ route('items.edit', $item->id) }}" class="btn btn-success btn-sm">Edit</a></div><div style='float:left;'>
-								{!! Form::open(['route' => ['items.destroy', $item->id], 'method'=>'DELETE']) !!}
-							    	{{ Form::submit('Delete', ['class'=>'btn btn-sm btn-danger btn-block', 'style'=>'', 'onclick'=>'return confirm("Are you sure?")']) }}
-								{!! Form::close() !!}</div>
-							</td>
-						</tr>
-					@endforeach
-				</tbody>
-			</table>
-			<div class="text-center">
-				{!! $items->links(); !!}
-			</div>
-		</div>
-	</div>
-    -->
+        <div class="row">
+            <div class="col">
+                <div class="flex-shrink-0 bg-white" style="max-width: 25%">
+                    <div class="d-flex pb-3 mb-3 align-items-center border-bottom">
+                        <span class="h3">Categories</span>
+                    </div>
+                    <div class="d-inline-block bg-white pl-1">
+                        <ul class="list-group list-group-flush">
+                            @foreach ($categories as $category)
+                            <li class="list-group-item">
+                                <a class="link-dark" href="#">{{ $category->name }}</a>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="container pt-4">
+                    @foreach ($items->chunk(3) as $chunk)
+                        <div class="row justify-content-center align-items-center">
+                            @foreach ($chunk as $item)
+                                <div class="col-lg-3 col-md-6 mb-4">
+                                    <div class="card h-100">
+                                    <a href="#"><img class="card-img-top" src={{ Storage::url('images/items/tn_'.$item->picture) }} alt=""></a>
+                                        <div class="card-body">
+                                            <h4 class="card-title">
+                                                <a href="#">{{ $item->title }}</a>
+                                            </h4>
+                                            <h5>${{ $item->price }}</h5>
+                                            <button type="button" class="btn btn-success float-right"><span class="glyphicon glyphicon-shopping-cart"></span> Buy Now</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="col">
+            </div>
+        </div>
 
 @endsection
