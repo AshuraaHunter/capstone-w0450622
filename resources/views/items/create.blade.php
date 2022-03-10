@@ -14,6 +14,11 @@ Laravel Project
 <script type="text/javascript">
 	tinymce.init({
 	  selector: 'textarea.tinymce-editor', // Replace this CSS selector to match the placeholder element for TinyMCE
+	  setup: function (editor) {
+    	editor.on('change', function () {
+            tinymce.triggerSave();
+        });
+      },
 	  plugins: 'code table lists',
 	  toolbar: 'undo redo | formatselect| bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table',
 	  content_css: '//www.tiny.cloud/css/codepen.min.css'

@@ -122,9 +122,9 @@ class CategoryController extends Controller
         $category = Category::find($id);
         if (!$items->contains('category_id',$id)) {
             $category->delete();
-            Session::flash('success','The category has been deleted');
+            Session::flash('success','The category has been deleted.');
         } else {
-            Session::flash('error','Unable to delete the category');
+            Session::flash('error','Unable to delete the category.');
         }
 
         return redirect()->route('categories.index');
