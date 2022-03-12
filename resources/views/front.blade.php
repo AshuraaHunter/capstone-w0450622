@@ -33,10 +33,10 @@ Laravel Project
                             @foreach ($chunk as $item)
                                 <div class="col-lg-3 col-md-6 mb-4 ms-4 ps-3">
                                     <div class="card ps-3" style="width: 180px; height: 250px">
-                                    <a href="#"><img class="card-img-top" src={{ Storage::url('images/items/tn_'.$item->picture) }} alt=""></a>
+                                    <a href="{{ route('details', $item->id) }}"><img class="card-img-top" src={{ Storage::url('images/items/tn_'.$item->picture) }} alt=""></a>
                                         <div class="card-body">
                                             <h4 class="card-title truncate">
-                                                <a href="#" class="truncate">{{ $item->title }}</a>
+                                                <a href="{{ route('details', $item->id) }}" class="truncate">{{ $item->title }}</a>
                                             </h4>
                                             <div class="container" style="width: 100%">
                                                 <div class="row">
