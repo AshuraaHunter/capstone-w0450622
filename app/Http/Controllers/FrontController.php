@@ -19,4 +19,11 @@ class FrontController extends Controller
         $items = Item::all();
         return view('front')->with('categories',$categories)->with('items',$items);
     }
+
+    public function indexId($id)
+    {
+        $categories = Category::orderBy('name','ASC')->paginate(10);
+        $items = Item::all()->where('category_id',$id);
+        return view('front')->with('categories',$categories)->with('items',$items);
+    }
 }

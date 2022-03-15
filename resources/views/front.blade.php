@@ -19,7 +19,7 @@ Laravel Project
                         <ul class="list-group list-group-flush">
                             @foreach ($categories as $category)
                             <li class="list-group-item">
-                                <a class="link-dark" href="#" style="font-size: 1.75rem">{{ $category->name }}</a>
+                                <a class="link-dark" href="{{ route('front', $category->id) }}" style="font-size: 1.75rem">{{ $category->name }}</a>
                             </li>
                             @endforeach
                         </ul>
