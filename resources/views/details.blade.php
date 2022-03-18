@@ -1,4 +1,22 @@
-@extends('common')
+@php
+try {
+    session_start();
+} catch (ErrorException $e) {
+
+}
+
+if (!isset($_SESSION) || !isset($_SESSION["SESSION_ID"]) || !isset($_SESSION["SESSION_IPADDRESS"])) {
+  $session_id = session_id();
+  $session_ipaddress = $_SERVER['REMOTE_ADDR'];
+  #echo "session_id: $session_id, session_ipaddress: $session_ipaddress";
+}
+else {
+  $session_id = $_SESSION["SESSION_ID"];
+  $session_ipaddress = $_SESSION["SESSION_IPADDRESS"];
+  #echo "session_id: $session_id, session_ipaddress: $session_ipaddress";
+}
+@endphp
+@extends('public')
 
 @section('pagetitle')
 {{ $item->title }} | Item Info
@@ -38,7 +56,11 @@ Laravel Project
                 <div class="col">
                     <div class="float-end">
                         <p class="d-inline me-1" style="font-size: 1.8em"><strong>${{ $item->price }} • </strong></p>
-                        <button type="button" class="btn btn-success d-inline align-top"><span class="glyphicon glyphicon-shopping-cart"></span> Add to Cart</button>
+                        {!! Form::open(['route' => ['addToCart', $item->id, $session_id, $session_ipaddress, 1], 'method'=>'POST']) !!}
+                            <!-- <span class="glyphicon glyphicon-shopping-cart"></span> -->
+							{{ Form::button('Add to Cart', ['type' => 'submit', 'class'=>'btn btn-success d-inline align-top', 'style'=>'']) }}
+						{!! Form::close() !!}
+                        <!--<button type="button" class="btn btn-success d-inline align-top"><span class="glyphicon glyphicon-shopping-cart"></span> Add to Cart</button>-->
                     </div>
                 </div>
             </div>

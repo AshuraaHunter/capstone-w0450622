@@ -1,3 +1,17 @@
+@php
+session_start();
+
+if (!isset($_SESSION) || !isset($_SESSION["SESSION_ID"]) || !isset($_SESSION["SESSION_IPADDRESS"])) {
+  $session_id = session_id();
+  $session_ipaddress = $_SERVER['REMOTE_ADDR'];
+  #echo "session_id: $session_id, session_ipaddress: $session_ipaddress";
+}
+else {
+  $session_id = $_SESSION["SESSION_ID"];
+  $session_ipaddress = $_SESSION["SESSION_IPADDRESS"];
+  #echo "session_id: $session_id, session_ipaddress: $session_ipaddress";
+}
+@endphp
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>

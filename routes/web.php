@@ -30,6 +30,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/front', [App\Http\Controllers\FrontController::class, 'index'])->name('front');
+Route::get('/front', [App\Http\Controllers\FrontController::class, 'index'])->name('frontAlpha');
 Route::get('/front/{id}', [App\Http\Controllers\FrontController::class, 'indexId'])->name('front');
 Route::get('/details/{id}', [App\Http\Controllers\DetailsController::class, 'index'])->name('details');
+
+Route::post('/cart/{item_id}/{session_id}/{ip_address}/{quantity}',[App\Http\Controllers\CartController::class, 'store'])->name('addToCart');

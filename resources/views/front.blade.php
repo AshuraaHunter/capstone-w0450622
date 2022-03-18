@@ -1,4 +1,18 @@
-@extends('common')
+@php
+session_start();
+
+if (!isset($_SESSION) || !isset($_SESSION["SESSION_ID"]) || !isset($_SESSION["SESSION_IPADDRESS"])) {
+  $session_id = session_id();
+  $session_ipaddress = $_SERVER['REMOTE_ADDR'];
+  #echo "session_id: $session_id, session_ipaddress: $session_ipaddress";
+}
+else {
+  $session_id = $_SESSION["SESSION_ID"];
+  $session_ipaddress = $_SESSION["SESSION_IPADDRESS"];
+  #echo "session_id: $session_id, session_ipaddress: $session_ipaddress";
+}
+@endphp
+@extends('public')
 
 @section('pagetitle')
 Front Page
@@ -44,7 +58,11 @@ Laravel Project
                                                         <h5 class="text-left float-left">${{ $item->price }}</h5>
                                                     </div>
                                                     <div class="col" style="width: 50%">
-                                                        <button type="button" class="btn btn-success float-right"><span class="glyphicon glyphicon-shopping-cart"></span> Buy Now</button>
+                                                        <!--<button type="button" class="btn btn-success float-right"><span class="glyphicon glyphicon-shopping-cart"></span> Buy Now</button>-->
+                                                        {!! Form::open(['route' => ['addToCart', $item->id, $session_id, $session_ipaddress, 1], 'method'=>'POST']) !!}
+                                                            <!-- <span class="glyphicon glyphicon-shopping-cart"></span> -->
+										                    {{ Form::submit('Buy Now', ['type' => 'submit', 'class'=>'btn btn-success float-right', 'style'=>'']) }}
+									                    {!! Form::close() !!}
                                                     </div>
                                                 </div>
                                             </div>

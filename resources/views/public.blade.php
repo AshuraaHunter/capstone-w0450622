@@ -1,3 +1,21 @@
+@php
+try {
+  session_start();
+} catch (ErrorException $e) {
+  # print('error occurred in starting session');
+}
+
+if (!isset($_SESSION) || !isset($_SESSION["SESSION_ID"]) || !isset($_SESSION["SESSION_IPADDRESS"])) {
+  $session_id = session_id();
+  $session_ipaddress = $_SERVER['REMOTE_ADDR'];
+  #echo "session_id: $session_id, session_ipaddress: $session_ipaddress";
+}
+else {
+  $session_id = $_SESSION["SESSION_ID"];
+  $session_ipaddress = $_SESSION["SESSION_IPADDRESS"];
+  #echo "session_id: $session_id, session_ipaddress: $session_ipaddress";
+}
+@endphp
 <!DOCTYPE html>
 <html lang="en">
   <head>
