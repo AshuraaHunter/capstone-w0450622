@@ -59,10 +59,12 @@ Laravel Project
                                                     </div>
                                                     <div class="col" style="width: 50%">
                                                         <!--<button type="button" class="btn btn-success float-right"><span class="glyphicon glyphicon-shopping-cart"></span> Buy Now</button>-->
-                                                        {!! Form::open(['route' => ['addToCart', $item->id, $session_id, $session_ipaddress, 1], 'method'=>'POST']) !!}
-                                                            <!-- <span class="glyphicon glyphicon-shopping-cart"></span> -->
-										                    {{ Form::submit('Buy Now', ['type' => 'submit', 'class'=>'btn btn-success float-right', 'style'=>'']) }}
-									                    {!! Form::close() !!}
+                                                        <form action={{ route("addToCart",[$item->id, $session_id, $session_ipaddress, 1]) }} method="post">
+                                                            {{ csrf_field() }}
+                                                            <input type="hidden" name="extra_submit_param" value="extra_submit_value">
+                                                            <button type="submit" class="btn btn-success float-right"><span class="glyphicon glyphicon-shopping-cart"></span> Buy Now</button>
+                                                        </form>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>

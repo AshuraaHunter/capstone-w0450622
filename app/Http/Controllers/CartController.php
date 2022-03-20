@@ -3,21 +3,36 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use App\Cart;
+use App\Item;
 use Storage;
 use Session;
 
 class CartController extends Controller
 {
-    public function store($item_id,$session_id,$ip_address,$quantity)
+    public function store(Request $request)
     { 
         //dd(storage_path());;
         //validate the data
         // if fails, defaults to create() passing errors
-        //$this->validate($request, ['item_id'=>'required|integer|min:0|exists:items,id',
-        //                           'session_id'=>'required|string',
-        //                           'ip_address'=>'required|string',
-        //                           'quantity'=>'required|integer']); 
+        $request->merge([
+            'item_id' => intval(Crypt::decryptString($request->item_id)),
+            'session_id' => Crypt::decryptString($request->session_id),
+            'ip_address' => Crypt::decryptString($request->ip_address),
+        ]);
+    
+        $item_id = $request->item_id;
+        $session_id = $request->session_id;
+        $ip_address = $request->ip_address;
+        $quantity = $request->quantity;
+
+        
+        $this->validate($request, ['item_id'=>'required|integer|min:0|exists:items,id',
+                                   'session_id'=>'required|string',
+                                   'ip_address'=>'required|string',
+                                   'quantity'=>'required|integer']); 
+        
 
         //send to DB (use ELOQUENT)
         $carts = Cart::all();
@@ -39,6 +54,12 @@ class CartController extends Controller
         Session::flash('success','Items added to cart.');
 
         //redirect
-        return redirect()->route('frontAlpha');
+        return redirect()->route('showCart',['sid' => $session_id, 'ipaddr' => $ip_address]);
+    }
+    public function show($session_id,$ip_address)
+    {
+        $userCart = Cart::all()->where('session_id','=',$session_id)->where('ip_address','=',$ip_address);
+        $items = Item::all();
+        return view('cart.show')->with('userCart', $userCart)->with('items', $items);
     }
 }

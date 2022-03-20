@@ -34,4 +34,5 @@ Route::get('/front', [App\Http\Controllers\FrontController::class, 'index'])->na
 Route::get('/front/{id}', [App\Http\Controllers\FrontController::class, 'indexId'])->name('front');
 Route::get('/details/{id}', [App\Http\Controllers\DetailsController::class, 'index'])->name('details');
 
-Route::post('/cart/{item_id}/{session_id}/{ip_address}/{quantity}',[App\Http\Controllers\CartController::class, 'store'])->name('addToCart');
+Route::post('/cart/itemProcess',[App\Http\Controllers\CartController::class, 'store'])->name('addToCart');
+Route::get('/cart/{sid}/{ipaddr}',[App\Http\Controllers\CartController::class, 'show'])->name('showCart');

@@ -56,10 +56,15 @@ Laravel Project
                 <div class="col">
                     <div class="float-end">
                         <p class="d-inline me-1" style="font-size: 1.8em"><strong>${{ $item->price }} • </strong></p>
-                        {!! Form::open(['route' => ['addToCart', $item->id, $session_id, $session_ipaddress, 1], 'method'=>'POST']) !!}
-                            <!-- <span class="glyphicon glyphicon-shopping-cart"></span> -->
-							{{ Form::button('Add to Cart', ['type' => 'submit', 'class'=>'btn btn-success d-inline align-top', 'style'=>'']) }}
-						{!! Form::close() !!}
+                        <form action={{ route("addToCart") }} class="d-inline align-top" method="post" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <input type="hidden" value="{{ Crypt::encryptString($item->id) }}" name="item_id">
+                            <input type="hidden" value="{{ Crypt::encryptString($session_id) }}" name="session_id">
+                            <input type="hidden" value="{{ Crypt::encryptString($session_ipaddress) }}" name="ip_address">
+                            <input type="hidden" value="1" name="quantity">
+                            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-shopping-cart"></span> Add to Cart</button>
+                        </form>
+                        
                         <!--<button type="button" class="btn btn-success d-inline align-top"><span class="glyphicon glyphicon-shopping-cart"></span> Add to Cart</button>-->
                     </div>
                 </div>
