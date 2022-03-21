@@ -54,10 +54,13 @@ class CartController extends Controller
         Session::flash('success','Items added to cart.');
 
         //redirect
-        return redirect()->route('showCart',['sid' => $session_id, 'ipaddr' => $ip_address]);
+        return redirect()->route('showCart',['sid' => Crypt::encryptString($session_id), 'ipaddr' => Crypt::encryptString($ip_address)]);
     }
-    public function show($session_id,$ip_address)
+    public function show($session_id, $ip_address)
     {
+        $session_id = Crypt::decryptString($session_id);
+        $ip_address = Crypt::decryptString($ip_address);
+
         $userCart = Cart::all()->where('session_id','=',$session_id)->where('ip_address','=',$ip_address);
         $items = Item::all();
         return view('cart.show')->with('userCart', $userCart)->with('items', $items);

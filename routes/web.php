@@ -35,4 +35,4 @@ Route::get('/front/{id}', [App\Http\Controllers\FrontController::class, 'indexId
 Route::get('/details/{id}', [App\Http\Controllers\DetailsController::class, 'index'])->name('details');
 
 Route::post('/cart/itemProcess',[App\Http\Controllers\CartController::class, 'store'])->name('addToCart');
-Route::get('/cart/{sid}/{ipaddr}',[App\Http\Controllers\CartController::class, 'show'])->name('showCart');
+Route::get('/cart/view/{sid}/{ipaddr}',[App\Http\Controllers\CartController::class, 'show'])->name('showCart');
