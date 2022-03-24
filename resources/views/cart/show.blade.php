@@ -62,7 +62,7 @@ Laravel Project
 									</div>
 								</div>
 							</td>
-							<td>
+							<td style="max-width: 80px">
 								<!--
 								<form id='myform' class='identify' method='POST' action='#'>
 									<input type='button' value='-' class='qtyminus' field='{{$fieldName}}' />
@@ -70,7 +70,7 @@ Laravel Project
 									<input type='button' value='+' class='qtyplus' field='{{$fieldName}}' />
 								</form>
 								-->
-								<form action={{ route("updateCart") }} class="d-inline align-top" method="post" enctype="multipart/form-data">
+								<form action={{ route("updateCart") }} method="post" enctype="multipart/form-data">
 									{{ csrf_field() }}
 									<input type="hidden" name="_method" value="PUT">
 									<input type="hidden" value="{{ Crypt::encryptString($cartItem->id) }}" name="id">
@@ -80,9 +80,19 @@ Laravel Project
 									<input type='button' value='-' class='qtyminus' field='{{$fieldName}}' />
 									<input type='text' name='{{$fieldName}}' value={{ $cartItem->quantity }} max={{ $items->firstWhere('id', '=', $cartItem->item_id)->quantity }} class='qty' />
 									<input type='button' value='+' class='qtyplus' field='{{$fieldName}}' />
-									<button type="submit" class="btn btn-success">Update</button>
+									<button type="submit" class="btn btn-success d-inline align-top">Update</button>
 								</form>
 								<!--<h5 class="text-right float-right">{{ $cartItem->quantity }}</h5>-->
+							</td>
+							<td>
+								<form action={{ route("deleteCart") }} class="d-inline float-start" method="post" enctype="multipart/form-data">
+									{{ csrf_field() }}
+									<input type="hidden" name="_method" value="DELETE">
+									<input type="hidden" value="{{ Crypt::encryptString($cartItem->item_id) }}" name="item_id">
+									<input type="hidden" value="{{ Crypt::encryptString($session_id) }}" name="session_id">
+									<input type="hidden" value="{{ Crypt::encryptString($session_ipaddress) }}" name="ip_address">
+									<button type="submit" class="btn btn-danger">Remove</button>
+								</form>
 							</td>
 						</tr>
 						@php

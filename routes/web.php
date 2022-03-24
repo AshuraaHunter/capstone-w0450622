@@ -36,4 +36,5 @@ Route::get('/details/{id}', [App\Http\Controllers\DetailsController::class, 'ind
 
 Route::post('/cart/itemProcess',[App\Http\Controllers\CartController::class, 'store'])->name('addToCart');
 Route::put('/cart/updateItem',[App\Http\Controllers\CartController::class, 'update'])->name('updateCart');
+Route::delete('/cart/deleteItem',[App\Http\Controllers\CartController::class, 'delete'])->name('deleteCart');
 Route::get('/cart/view/{sid}/{ipaddr}',[App\Http\Controllers\CartController::class, 'show'])->name('showCart');

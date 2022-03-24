@@ -67,14 +67,6 @@ class CartController extends Controller
     }
     public function update(Request $request)
     { 
-        function console_log($output, $with_script_tags = true) {
-            $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) . 
-                ');';
-            if ($with_script_tags) {
-                $js_code = '<script>' . $js_code . '</script>';
-            }
-            echo $js_code;
-        }
         //dd(storage_path());;
         //validate the data
         // if fails, defaults to create() passing errors
@@ -123,5 +115,50 @@ class CartController extends Controller
 
         //redirect
         return redirect()->route('showCart',['sid' => Crypt::encryptString($session_id), 'ipaddr' => Crypt::encryptString($ip_address)]);
+    }
+
+    public function delete(Request $request)
+    { 
+        //dd(storage_path());;
+        //validate the data
+        // if fails, defaults to create() passing errors
+        $request->merge([
+            'item_id' => intval(Crypt::decryptString($request->item_id)),
+            'session_id' => Crypt::decryptString($request->session_id),
+            'ip_address' => Crypt::decryptString($request->ip_address)
+        ]);
+    
+        $item_id = $request->item_id;
+        $session_id = $request->session_id;
+        $ip_address = $request->ip_address;
+
+        
+        $this->validate($request, ['item_id'=>'required|integer|min:0|exists:items,id',
+                                   'session_id'=>'required|string',
+                                   'ip_address'=>'required|string']); 
+        
+
+        //send to DB (use ELOQUENT)
+        $carts = Cart::all();
+        # reference: https://stackoverflow.com/questions/43957370/laravel-contains-for-multiple-values
+        if ($carts->contains(function ($val, $key) use ($item_id, $session_id, $ip_address) {
+            return $val->item_id == $item_id && $val->session_id == $session_id && $val->ip_address == $ip_address;
+        })) {
+            $cart = Cart::where('item_id','=',$item_id)->where('session_id','=',$session_id)->where('ip_address','=',$ip_address)->first();
+        }
+
+        $cart->delete(); //saves to DB
+
+        Session::flash('success','Item successfully deleted.');
+
+        $carts = Cart::all();
+
+        if ($carts->contains(function ($val, $key) use ($session_id, $ip_address) {
+            return $val->session_id == $session_id && $val->ip_address == $ip_address;
+        })) {
+            return redirect()->route('showCart',['sid' => Crypt::encryptString($session_id), 'ipaddr' => Crypt::encryptString($ip_address)]);
+        } else {
+            return redirect()->route('frontAlpha');
+        }
     }
 }

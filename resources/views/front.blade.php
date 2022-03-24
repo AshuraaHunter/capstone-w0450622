@@ -59,10 +59,13 @@ Laravel Project
                                                     </div>
                                                     <div class="col" style="width: 50%">
                                                         <!--<button type="button" class="btn btn-success float-right"><span class="glyphicon glyphicon-shopping-cart"></span> Buy Now</button>-->
-                                                        <form action={{ route("addToCart",[$item->id, $session_id, $session_ipaddress, 1]) }} method="post">
+                                                        <form action={{ route("addToCart") }} class="d-inline align-top" method="post" enctype="multipart/form-data">
                                                             {{ csrf_field() }}
-                                                            <input type="hidden" name="extra_submit_param" value="extra_submit_value">
-                                                            <button type="submit" class="btn btn-success float-right"><span class="glyphicon glyphicon-shopping-cart"></span> Buy Now</button>
+                                                            <input type="hidden" value="{{ Crypt::encryptString($item->id) }}" name="item_id">
+                                                            <input type="hidden" value="{{ Crypt::encryptString($session_id) }}" name="session_id">
+                                                            <input type="hidden" value="{{ Crypt::encryptString($session_ipaddress) }}" name="ip_address">
+                                                            <input type="hidden" value="1" name="quantity">
+                                                            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-shopping-cart"></span> Buy Now</button>
                                                         </form>
                                                         
                                                     </div>
