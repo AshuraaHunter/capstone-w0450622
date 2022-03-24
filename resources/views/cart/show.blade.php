@@ -1,3 +1,17 @@
+@php
+session_start();
+
+if (!isset($_SESSION) || !isset($_SESSION["SESSION_ID"]) || !isset($_SESSION["SESSION_IPADDRESS"])) {
+  $session_id = session_id();
+  $session_ipaddress = $_SERVER['REMOTE_ADDR'];
+  #echo "session_id: $session_id, session_ipaddress: $session_ipaddress";
+}
+else {
+  $session_id = $_SESSION["SESSION_ID"];
+  $session_ipaddress = $_SESSION["SESSION_IPADDRESS"];
+  #echo "session_id: $session_id, session_ipaddress: $session_ipaddress";
+}
+@endphp
 @extends('common') 
 
 @section('pagetitle')
@@ -44,15 +58,31 @@ Laravel Project
 									<div class="row">
 										<div class="col pt-2">
 											<h5 class="text-left float-left">${{ $items->firstWhere('id', '=', $cartItem->item_id)->price }}</h5>
-											<form id='myform' class='identify' method='POST' action='#'>
-												<input type='button' value='-' class='qtyminus' field='{{$fieldName}}' />
-												<input type='text' name='{{$fieldName}}' value={{ $cartItem->quantity }} max={{ $items->firstWhere('id', '=', $cartItem->item_id)->quantity }} class='qty' />
-												<input type='button' value='+' class='qtyplus' field='{{$fieldName}}' />
-											</form>
-											<!--<h5 class="text-right float-right">{{ $cartItem->quantity }}</h5>-->
 										</div>
 									</div>
 								</div>
+							</td>
+							<td>
+								<!--
+								<form id='myform' class='identify' method='POST' action='#'>
+									<input type='button' value='-' class='qtyminus' field='{{$fieldName}}' />
+									<input type='text' name='{{$fieldName}}' value={{ $cartItem->quantity }} max={{ $items->firstWhere('id', '=', $cartItem->item_id)->quantity }} class='qty' />
+									<input type='button' value='+' class='qtyplus' field='{{$fieldName}}' />
+								</form>
+								-->
+								<form action={{ route("updateCart") }} class="d-inline align-top" method="post" enctype="multipart/form-data">
+									{{ csrf_field() }}
+									<input type="hidden" name="_method" value="PUT">
+									<input type="hidden" value="{{ Crypt::encryptString($cartItem->id) }}" name="id">
+									<input type="hidden" value="{{ Crypt::encryptString($cartItem->item_id) }}" name="item_id">
+									<input type="hidden" value="{{ Crypt::encryptString($session_id) }}" name="session_id">
+									<input type="hidden" value="{{ Crypt::encryptString($session_ipaddress) }}" name="ip_address">
+									<input type='button' value='-' class='qtyminus' field='{{$fieldName}}' />
+									<input type='text' name='{{$fieldName}}' value={{ $cartItem->quantity }} max={{ $items->firstWhere('id', '=', $cartItem->item_id)->quantity }} class='qty' />
+									<input type='button' value='+' class='qtyplus' field='{{$fieldName}}' />
+									<button type="submit" class="btn btn-success">Update</button>
+								</form>
+								<!--<h5 class="text-right float-right">{{ $cartItem->quantity }}</h5>-->
 							</td>
 						</tr>
 						@php
