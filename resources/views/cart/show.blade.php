@@ -70,7 +70,7 @@ Laravel Project
 									<input type='button' value='+' class='qtyplus' field='{{$fieldName}}' />
 								</form>
 								-->
-								<form action={{ route("updateCart") }} method="post" enctype="multipart/form-data">
+								<form action={{ route("update_cart") }} method="post" enctype="multipart/form-data">
 									{{ csrf_field() }}
 									<input type="hidden" name="_method" value="PUT">
 									<input type="hidden" value="{{ Crypt::encryptString($cartItem->id) }}" name="id">
@@ -85,7 +85,7 @@ Laravel Project
 								<!--<h5 class="text-right float-right">{{ $cartItem->quantity }}</h5>-->
 							</td>
 							<td>
-								<form action={{ route("deleteCart") }} class="d-inline float-start" method="post" enctype="multipart/form-data">
+								<form action={{ route("remove_item") }} class="d-inline float-start" method="post" enctype="multipart/form-data">
 									{{ csrf_field() }}
 									<input type="hidden" name="_method" value="DELETE">
 									<input type="hidden" value="{{ Crypt::encryptString($cartItem->item_id) }}" name="item_id">
@@ -103,6 +103,7 @@ Laravel Project
 			</table>
 			<h5 class="text-right float-right">Subtotal:</h5>
 			<h3 class="text-right float-right">${{ $sum }}</h3>
+			<a href="{{ route('frontAlpha') }}" class="btn btn-success btn-sm float-right">Checkout</a>
 		</div>
 	</div>
 

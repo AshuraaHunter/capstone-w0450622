@@ -59,7 +59,7 @@ Laravel Project
                                                     </div>
                                                     <div class="col" style="width: 50%">
                                                         <!--<button type="button" class="btn btn-success float-right"><span class="glyphicon glyphicon-shopping-cart"></span> Buy Now</button>-->
-                                                        <form action={{ route("addToCart") }} class="d-inline align-top" method="post" enctype="multipart/form-data">
+                                                        <form action={{ route("add_to_cart") }} class="d-inline align-top" method="post" enctype="multipart/form-data">
                                                             {{ csrf_field() }}
                                                             <input type="hidden" value="{{ Crypt::encryptString($item->id) }}" name="item_id">
                                                             <input type="hidden" value="{{ Crypt::encryptString($session_id) }}" name="session_id">

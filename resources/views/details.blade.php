@@ -56,7 +56,7 @@ Laravel Project
                 <div class="col">
                     <div class="float-end">
                         <p class="d-inline me-1" style="font-size: 1.8em"><strong>${{ $item->price }} • </strong></p>
-                        <form action={{ route("addToCart") }} class="d-inline align-top" method="post" enctype="multipart/form-data">
+                        <form action={{ route("add_to_cart") }} class="d-inline align-top" method="post" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input type="hidden" value="{{ Crypt::encryptString($item->id) }}" name="item_id">
                             <input type="hidden" value="{{ Crypt::encryptString($session_id) }}" name="session_id">

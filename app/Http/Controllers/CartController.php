@@ -114,7 +114,7 @@ class CartController extends Controller
         Session::flash('success','Item successfully updated within cart.');
 
         //redirect
-        return redirect()->route('showCart',['sid' => Crypt::encryptString($session_id), 'ipaddr' => Crypt::encryptString($ip_address)]);
+        return redirect()->route('show_cart',['sid' => Crypt::encryptString($session_id), 'ipaddr' => Crypt::encryptString($ip_address)]);
     }
 
     public function delete(Request $request)
@@ -156,7 +156,7 @@ class CartController extends Controller
         if ($carts->contains(function ($val, $key) use ($session_id, $ip_address) {
             return $val->session_id == $session_id && $val->ip_address == $ip_address;
         })) {
-            return redirect()->route('showCart',['sid' => Crypt::encryptString($session_id), 'ipaddr' => Crypt::encryptString($ip_address)]);
+            return redirect()->route('show_cart',['sid' => Crypt::encryptString($session_id), 'ipaddr' => Crypt::encryptString($ip_address)]);
         } else {
             return redirect()->route('frontAlpha');
         }
