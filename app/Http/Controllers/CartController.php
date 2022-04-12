@@ -54,7 +54,7 @@ class CartController extends Controller
         Session::flash('success','Items added to cart.');
 
         //redirect
-        return redirect()->route('showCart',['sid' => Crypt::encryptString($session_id), 'ipaddr' => Crypt::encryptString($ip_address)]);
+        return redirect()->route('show_cart',['sid' => Crypt::encryptString($session_id), 'ipaddr' => Crypt::encryptString($ip_address)]);
     }
     public function show($session_id, $ip_address)
     {

@@ -79,27 +79,25 @@ class ItemController extends Controller
             $lg_location = 'images/items/lrg_' . $filename;
 
             $image = Image::make($image);
-            $image->backup(); # backup to restore to
             Storage::disk('public')->put($location, (string) $image->encode());
             $item->picture = $filename;
 
             # finds an appropriate aspect ratio to resize to,
             # then pastes image onto a blank canvas (transparent by default!)
             # this prevents stretching / cropping with other methods
-            $image->resize(140,140,function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $canvas = Image::canvas(140,140);
-            $canvas->insert($image,'center');
-            Storage::disk('public')->put($tn_location, (string) $canvas->encode());
-
-            $image->reset();
             $image->resize(4096,4096,function ($constraint) {
                 $constraint->aspectRatio();
             });
             $canvas = Image::canvas(4096,4096);
             $canvas->insert($image,'center');
             Storage::disk('public')->put($lg_location, (string) $canvas->encode());
+
+            $image->resize(140,140,function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $canvas = Image::canvas(140,140);
+            $canvas->insert($image,'center');
+            Storage::disk('public')->put($tn_location, (string) $canvas->encode());
         }
 
         $item->save(); //saves to DB

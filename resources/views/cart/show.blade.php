@@ -103,7 +103,35 @@ Laravel Project
 			</table>
 			<h5 class="text-right float-right">Subtotal:</h5>
 			<h3 class="text-right float-right">${{ $sum }}</h3>
-			<a href="{{ route('frontAlpha') }}" class="btn btn-success btn-sm float-right">Checkout</a>
+			<br />
+			{!! Form::open(['route' => 'check_order', 'data-parsley-validate' => '', 
+			            	'method' => 'post', 'files' => true]) !!}
+			    
+				{{ Form::label('fname', 'First Name:') }}
+				{{ Form::text('fname', null, ['class'=>'form-control', 'style'=>'', 
+			                                	'data-parsley-required'=>'', 
+												'data-parsley-maxlength'=>'127']) }}
+
+				{{ Form::label('lname', 'Last Name:') }}
+				{{ Form::text('lname', null, ['class'=>'form-control', 'style'=>'', 
+			                                	'data-parsley-required'=>'', 
+												'data-parsley-maxlength'=>'127']) }}
+
+				{{ Form::label('phone', 'Phone Number:', ['style'=>'margin-top:20px']) }}
+				{{ Form::text('phone', null, ['class'=>'form-control', 'style'=>'', 
+			                                	'data-parsley-required'=>'']) }}
+
+				{{ Form::label('email', 'Email Address:') }}
+				{{ Form::text('email', null, ['class'=>'form-control', 'style'=>'', 
+			                                	'data-parsley-required'=>'',
+												'data-parsley-pattern'=>'/[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+.[a-zA-Z]{2,4}/']) }} <!-- source: https://thisinterestsme.com/php-email-regex/ -->
+
+
+				{{ Form::hidden('session_id', Crypt::encryptString($session_id)), ['class'=>'form-control', 'style'=>'', 'data-parsley-required'=>''] }}
+				{{ Form::hidden('ip_address', Crypt::encryptString($session_ipaddress)), ['class'=>'form-control', 'style'=>'', 'data-parsley-required'=>''] }}
+				{{ Form::submit('Checkout', ['class'=>'btn btn-success btn-lg btn-block', 'style'=>'margin-top:20px']) }}
+
+			{!! Form::close() !!}
 		</div>
 	</div>
 

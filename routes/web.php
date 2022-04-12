@@ -38,3 +38,5 @@ Route::post('/cart/itemProcess',[App\Http\Controllers\CartController::class, 'st
 Route::put('/cart/updateItem',[App\Http\Controllers\CartController::class, 'update'])->name('update_cart');
 Route::delete('/cart/deleteItem',[App\Http\Controllers\CartController::class, 'delete'])->name('remove_item');
 Route::get('/cart/view/{sid}/{ipaddr}',[App\Http\Controllers\CartController::class, 'show'])->name('show_cart');
+
+Route::post('/order/check',[App\Http\Controllers\OrderController::class, 'check'])->name('check_order');
