@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('items', '\App\Http\Controllers\ItemController');
     Route::resource('categories', '\App\Http\Controllers\CategoryController');
 
+    Route::get('/order',[App\Http\Controllers\OrderController::class, 'index'])->name('order');
     Route::get('/logout', '\App\Http\Controllers\LogoutController@perform')->name('logout.perform'); # testing logouts
 });
 
@@ -41,3 +42,4 @@ Route::get('/cart/view/{sid}/{ipaddr}',[App\Http\Controllers\CartController::cla
 
 Route::post('/order/check',[App\Http\Controllers\OrderController::class, 'check'])->name('check_order');
 Route::get('/thankyou/{id}',[App\Http\Controllers\ThankyouController::class, 'index'])->name('thankyou');
+Route::post('/thankyou/{id}',[App\Http\Controllers\ThankyouController::class, 'index'])->name('thankyou');

@@ -54,9 +54,7 @@ else {
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li class="{{ (Request::is('/')) ? "active" : "" }}"><a href="/" style="font-size: 1.6rem">Home</a></li>
-            <li class="{{ Request::is('categories/*') || Request::is('categories') ? "active" : "" }}"><a href="/categories" style="font-size: 1.6rem">Categories</a></li>
-            <li class="{{ Request::is('items/*') || Request::is('items') ? "active" : "" }}"><a href="/items" style="font-size: 1.6rem">Items</a></li>
+            <li class="{{ (Request::is('/frontAlpha')) ? "active" : "" }}"><a href="/front" style="font-size: 1.6rem">Home</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
           </ul>

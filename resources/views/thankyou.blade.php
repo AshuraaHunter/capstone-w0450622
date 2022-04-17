@@ -1,7 +1,16 @@
 @php
-session_start();
+try {
+    session_start();
+} catch (ErrorException $e) {
 
-if (!isset($_SESSION) || !isset($_SESSION["SESSION_ID"]) || !isset($_SESSION["SESSION_IPADDRESS"])) {
+}
+
+if (Auth::check() && !isset($_SESSION["SESSION_ID"])) {
+  # does nothing; allows admin to access the page w/o redirect
+}
+else if (!isset($_SESSION) || !isset($_SESSION["SESSION_ID"]) || !isset($_SESSION["SESSION_IPADDRESS"])) {
+  echo($_SESSION["SESSION_ID"]);
+  echo($_SESSION["SESSION_IPADDRESS"]);
   header("Location: " . URL::route('frontAlpha'));
   exit();
 }
@@ -83,6 +92,7 @@ Laravel Project
     @php
         unset($_SESSION["SESSION_ID"]);
         unset($_SESSION["SESSION_IPADDRESS"]);
+        session_regenerate_id(true); # without this, we will recycle the session ID we *just* unset
     @endphp
 
 @endsection

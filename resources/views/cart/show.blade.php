@@ -1,5 +1,9 @@
 @php
-session_start();
+try {
+    session_start();
+} catch (ErrorException $e) {
+
+}
 
 if (!isset($_SESSION) || !isset($_SESSION["SESSION_ID"]) || !isset($_SESSION["SESSION_IPADDRESS"])) {
   $session_id = session_id();
@@ -12,7 +16,7 @@ else {
   #echo "session_id: $session_id, session_ipaddress: $session_ipaddress";
 }
 @endphp
-@extends('common') 
+@extends('public') 
 
 @section('pagetitle')
 View Cart

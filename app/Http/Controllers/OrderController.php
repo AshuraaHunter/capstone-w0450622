@@ -13,6 +13,11 @@ use Session;
 
 class OrderController extends Controller
 {
+    public function index()
+    {
+        $orders = Order::all();
+        return view('order.index')->with('orders',$orders);
+    }
     public function check(Request $request)
     { 
         $request->merge([
@@ -61,6 +66,7 @@ class OrderController extends Controller
             $new_item->order_id = $order_id;
             $new_item->price = $this_item->price;
             $new_item->quantity = $item->quantity;
+            $this_item->quantity = max(0,($this_item->quantity - $new_item->quantity)); # we don't want negative shop items!
             $new_item->save();
         }
 
