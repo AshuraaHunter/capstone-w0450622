@@ -40,3 +40,4 @@ Route::delete('/cart/deleteItem',[App\Http\Controllers\CartController::class, 'd
 Route::get('/cart/view/{sid}/{ipaddr}',[App\Http\Controllers\CartController::class, 'show'])->name('show_cart');
 
 Route::post('/order/check',[App\Http\Controllers\OrderController::class, 'check'])->name('check_order');
+Route::get('/thankyou/{id}',[App\Http\Controllers\ThankyouController::class, 'index'])->name('thankyou');

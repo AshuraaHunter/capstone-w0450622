@@ -67,6 +67,6 @@ class OrderController extends Controller
         Session::flash('success','Order processed.');
 
         //redirect
-        return redirect('thankyou');
+        return redirect()->route('thankyou',['id' => Crypt::encryptString($order_id)]);
     }
 }
