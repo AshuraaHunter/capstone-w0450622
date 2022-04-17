@@ -68,6 +68,7 @@ class OrderController extends Controller
             $new_item->quantity = $item->quantity;
             $this_item->quantity = max(0,($this_item->quantity - $new_item->quantity)); # we don't want negative shop items!
             $new_item->save();
+            $this_item->save();
         }
 
         Session::flash('success','Order processed.');

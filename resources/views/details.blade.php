@@ -48,21 +48,28 @@ Laravel Project
             <div class="row">
                 <div class="col">
                     <div class="float-end">
-                        <p><strong>{{ $item->quantity }}</strong> left in stock.</p>
+                        @if ($item->quantity > 0)
+                            <p><strong>{{ $item->quantity }}</strong> left in stock.</p>
+                        @else
+                            <p>This item is <strong>out of stock.</strong></p>
+                        @endif
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <div class="float-end">
-                        <p class="d-inline me-1" style="font-size: 1.8em"><strong>${{ $item->price }} • </strong></p>
+                        <p class="d-inline me-1" style="font-size: 1.8em"><strong>${{ $item->price }}</strong></p>
                         <form action={{ route("add_to_cart") }} class="d-inline align-top" method="post" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <input type="hidden" value="{{ Crypt::encryptString($item->id) }}" name="item_id">
                             <input type="hidden" value="{{ Crypt::encryptString($session_id) }}" name="session_id">
                             <input type="hidden" value="{{ Crypt::encryptString($session_ipaddress) }}" name="ip_address">
                             <input type="hidden" value="1" name="quantity">
-                            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-shopping-cart"></span> Add to Cart</button>
+                            @if ($item->quantity > 0)
+                                <p class="d-inline me-1" style="font-size: 1.8em"><strong> • </strong></p>
+                                <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-shopping-cart"></span> Add to Cart</button>
+                            @endif
                         </form>
                         
                         <!--<button type="button" class="btn btn-success d-inline align-top"><span class="glyphicon glyphicon-shopping-cart"></span> Add to Cart</button>-->
