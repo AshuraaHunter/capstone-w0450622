@@ -2,7 +2,8 @@
 session_start();
 
 if (!isset($_SESSION) || !isset($_SESSION["SESSION_ID"]) || !isset($_SESSION["SESSION_IPADDRESS"])) {
-  header("Location: ". URL::to('/front'));
+  header("Location: " . URL::route('frontAlpha'));
+  exit();
 }
 else {
   $session_id = $_SESSION["SESSION_ID"];
